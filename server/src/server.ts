@@ -7,6 +7,8 @@ import { memoriesRoutes } from "./routes/memories"
 import { authRoutes } from "./routes/auth"
 
 const port = 3333
+const host = "0.0.0.0"
+
 const app = fastify()
 
 app.register(cors, {
@@ -23,6 +25,7 @@ app.register(authRoutes)
 app
   .listen({
     port,
+    host,
   })
   .then(() => {
     console.log(`🚀 Server is running on port ${port}`)
