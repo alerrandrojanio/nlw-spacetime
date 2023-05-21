@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import nlwLogo from "../assets/nlw-spacetime-logo.svg";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -17,12 +18,13 @@ export function Hero() {
         </p>
       </div>
 
-      <a
-        href=""
-        className="inline-block rounded-full bg-green-500 px-5 py-3 font-baijamjuree text-sm uppercase leading-none text-black hover:bg-green-600"
+      <Link
+        href="/memories/new"
+        className="keyboard-navigation inline-block rounded-full bg-green-500 px-5 py-3 font-baijamjuree text-sm uppercase leading-none text-black
+         hover:bg-green-600 focus-visible:ring-green-500"
       >
         CADASTRAR LEMBRANÇA
-      </a>
+      </Link>
     </div>
   );
 }

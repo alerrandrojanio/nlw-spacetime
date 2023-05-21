@@ -3,10 +3,11 @@ export function Copyright() {
     <div className="text-sm leading-relaxed text-gray-200">
       Feito com 💜 no NLW da{" "}
       <a
-        href="htts://rocketseat.com.br"
+        href="https://www.rocketseat.com.br"
         target="_blank"
         rel="noreferrer"
-        className="underline hover:text-gray-100"
+        className="keyboard-navigation
+        underline hover:text-gray-100"
       >
         Rocketseat
       </a>

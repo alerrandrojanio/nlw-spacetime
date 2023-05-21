@@ -3,7 +3,10 @@ export function EmptyMemories() {
     <div className="flex flex-1 items-center justify-center">
       <p className="w-[360px] text-center leading-relaxed">
         Você ainda não registrou nenhuma lembrança, comece a{" "}
-        <a href="#" className="underline transition-colors hover:text-gray-50">
+        <a
+          href="#"
+          className="keyboard-navigation underline transition-colors hover:text-gray-50"
+        >
           criar agora
         </a>
         !
