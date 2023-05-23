@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { CameraIcon } from "lucide-react";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";

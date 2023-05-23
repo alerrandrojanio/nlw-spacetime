@@ -9,13 +9,6 @@ import Link from "next/link";
 
 dayjs.locale(ptBr);
 
-interface Memory {
-  id: string;
-  coverUrl: string;
-  createdAt: string;
-  excerpt: string;
-}
-
 export default async function Home() {
   const isAuthenticated = cookies().has("token");
 
