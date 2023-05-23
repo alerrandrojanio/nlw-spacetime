@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "nlw-spacetime-41tahmtvo-alerrandrojanio.vercel.app:3333",
+  baseURL: "nlw-spacetime-41tahmtvo-alerrandrojanio.vercel.app",
 });

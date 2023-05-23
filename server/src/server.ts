@@ -36,7 +36,6 @@ app.register(authRoutes)
 app
   .listen({
     port,
-    host,
   })
   .then(() => {
     console.log(`🚀 Server is running on port ${port}`)
