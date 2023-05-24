@@ -1,30 +1,42 @@
+"use client";
+
 import { EmptyMemories } from "@/components/EmptyMemories";
 import { api } from "@/lib/api";
 import dayjs from "dayjs";
 import ptBr from "dayjs/locale/pt-br";
+import Cookies from "js-cookie";
 import { ArrowRight } from "lucide-react";
-import { cookies } from "next/headers";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 dayjs.locale(ptBr);
 
-export default async function Home() {
-  const isAuthenticated = cookies().has("token");
+export default function Home() {
+  const [memories, setMemories] = useState<Memory[]>([]);
 
-  if (!isAuthenticated) {
-    return <EmptyMemories />;
+  useEffect(() => {
+    const isAuthenticated = Cookies.get("token");
+
+    if (isAuthenticated !== undefined) {
+      loadMemories();
+    }
+
+    <EmptyMemories />;
+  }, []);
+
+  const token = Cookies.get("token");
+
+  async function loadMemories() {
+    const response = await api.get("/memories", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    setMemories(response.data);
   }
-
-  const token = cookies().get("token")?.value;
-
-  const response = await api.get("/memories", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  const memories: Memory[] = response.data;
 
   if (memories.length === 0) {
     return <EmptyMemories />;
