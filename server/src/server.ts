@@ -29,6 +29,12 @@ app.register(jwt, {
   secret: "spacetime",
 })
 
+app.get("/", async (reply) => {
+  return {
+    message: "Hello world",
+  }
+})
+
 app.register(uploadRoutes)
 app.register(memoriesRoutes)
 app.register(authRoutes)
