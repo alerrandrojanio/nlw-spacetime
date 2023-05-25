@@ -1,20 +1,22 @@
 "use client";
 
-import { MediaPicker } from "@/components/MediaPicker";
 import { api } from "@/lib/api";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
-import { ArrowLeft, CameraIcon } from "lucide-react";
+import { ArrowLeft, CameraIcon, Cookie } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function EditMemory() {
   const [memory, setMemory] = useState<Memory | null>(null);
 
   const searchParams = useParams();
   const id = searchParams.id;
+
+  const router = useRouter();
 
   const token = Cookies.get("token");
 
@@ -28,12 +30,25 @@ export default function EditMemory() {
     setMemory(response.data);
   }
 
-  async function updateMemory() {
-    const updateResponse = await api.put(`/memories/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+  async function updateMemory(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+    await api.put(
+      `/memories/${id}`,
+      {
+        content: formData.get("content"),
+        isPublic: formData.get("isPublic"),
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    router.push(`/memories/${id}`);
   }
 
   useEffect(() => {
@@ -50,16 +65,13 @@ export default function EditMemory() {
           <ArrowLeft className="h-4 w-4" />
           Voltar
         </Link>
-
-        <h1>id: {id}</h1>
       </div>
       <div className="space-y-4">
         <time className="-ml-8 flex items-center gap-2 text-sm text-gray-100 before:h-px before:w-5 before:bg-gray-50">
           {dayjs(memory?.createdAt).format("DD[ de ]MMMM[, ]YYYY")}
         </time>
-
-        <div>{memory?.content}</div>
       </div>
+
       <form onSubmit={updateMemory} className="flex flex-1 flex-col gap-2">
         <div className="flex items-center gap-4">
           <label
@@ -72,12 +84,14 @@ export default function EditMemory() {
 
           <label
             htmlFor="isPublic"
+            defaultChecked={memory?.isPublic}
             className="flex items-center gap-1.5 text-sm text-gray-200 hover:text-gray-100"
           >
             <input
               type="checkbox"
               name="isPublic"
               id="isPublic"
+              defaultChecked={memory?.isPublic}
               value="true"
               className="h-4 w-4 rounded border-gray-400 bg-gray-700 text-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900"
             />
@@ -97,9 +111,6 @@ export default function EditMemory() {
             />
           </label>
         </div>
-        <MediaPicker />
-
-        <MediaPicker />
 
         {memory?.coverUrl && (
           <Image
@@ -113,10 +124,9 @@ export default function EditMemory() {
 
         <textarea
           name="content"
-          spellCheck={false}
+          defaultValue={memory?.content}
           className="w-full flex-1 resize-none rounded border-0 bg-transparent p-0 text-lg leading-relaxed text-gray-100 placeholder:text-gray-400 focus:ring-0"
           placeholder="Fique livre para adicionar fotos, vídeos e relatos sobre essa experiência que você quer lembrar para sempre."
-          value={memory?.content}
         />
 
         <button

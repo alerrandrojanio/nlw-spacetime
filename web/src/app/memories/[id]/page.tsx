@@ -90,6 +90,10 @@ export default function MemoryDetails() {
           />
         )}
 
+        <p className="text-sm leading-relaxed text-gray-300">
+          Mémoria {memory?.isPublic === true ? "Pública" : "Privada"}
+        </p>
+
         <p className="text-lg leading-relaxed text-gray-100">
           {memory?.content}
         </p>

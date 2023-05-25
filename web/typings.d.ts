@@ -4,4 +4,5 @@ interface Memory {
   createdAt: string;
   excerpt: string;
   content: string;
+  isPublic: boolean;
 }
